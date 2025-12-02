@@ -1,19 +1,12 @@
-package org.togetherjava.aoc.solutions.y2025;
-
-import org.togetherjava.aoc.internal.puzzle.AdventDay;
-import org.togetherjava.aoc.internal.puzzle.PuzzleInput;
-import org.togetherjava.aoc.internal.puzzle.PuzzleSolution;
-
 import java.util.ArrayList;
 import java.util.List;
 
-@AdventDay(day=1)
-public class Day01 implements PuzzleSolution {
+public class Day01 {
     List<String> inputsList;
     int[] numbers;
     int numZeros;
 
-    public Day01 () {
+    public Day01 (String inputFileName) {
         this.inputsList = new ArrayList<>();
         this.numbers = new int[100];
         this.numZeros = 0;
@@ -23,10 +16,7 @@ public class Day01 implements PuzzleSolution {
         }
     }
 
-    @Override
-    public Object part1(PuzzleInput input) {
-        this.inputsList = input.getLines();
-
+    public Object part1() {
         int value = 50;
 
         for (String line : inputsList) {
@@ -94,47 +84,47 @@ public class Day01 implements PuzzleSolution {
     }
 
     @Override
-    public Object part2(PuzzleInput input) {
-        int value = 50;
-
-        for (String line : inputsList) {
-            char direction =  line.charAt(0);
-            String rotationStr = line.substring(1);
-            int rotation = Integer.parseInt(rotationStr);
-
-            System.out.println("num zeros before " + value + " + " + direction + rotation + ": " + numZeros);
-            switch (direction) {
-                case 'L':
-                    int i = value - 1;
-                    if (i < 0) {
-                        i = 99;
-                    }
-                    for (int n = 1; n <= rotation; n++) {
-                        i--;
-                        if (i < 0) {
-                            i = 99;
-                            numZeros++;
-                        }
-                    }
-                    value = performRotation(value, rotation, direction);
-                    break;
-                case 'R':
-                    int j = value + 1;
-                    if (j > 99) {
-                        j = 0;
-                    }
-                    for (int n = 1; n <= rotation; n++) {
-                        j++;
-                        if (j > 99) {
-                            j = 0;
-                            numZeros++;
-                        }
-                    }
-                    value = performRotation(value, rotation, direction);
-                    break;
-            }
-            System.out.println("after: " + numZeros + " (new value = " + value + ")");
-        }
+    public Object part2() {
+//        int value = 50;
+//
+//        for (String line : inputsList) {
+//            char direction =  line.charAt(0);
+//            String rotationStr = line.substring(1);
+//            int rotation = Integer.parseInt(rotationStr);
+//
+//            System.out.println("num zeros before " + value + " + " + direction + rotation + ": " + numZeros);
+//            switch (direction) {
+//                case 'L':
+//                    int i = value - 1;
+//                    if (i < 0)
+//                        i = 99;
+//                    }
+//                    for (int n = 1; n <= rotation; n++) {
+//                        i--;
+//                        if (i < 0) {
+//                            i = 99;
+//                            numZeros++;
+//                        }
+//                    }
+//                    value = performRotation(value, rotation, direction);
+//                    break;
+//                case 'R':
+//                    int j = value + 1;
+//                    if (j > 99) {
+//                        j = 0;
+//                    }
+//                    for (int n = 1; n <= rotation; n++) {
+//                        j++;
+//                        if (j > 99) {
+//                            j = 0;
+//                            numZeros++;
+//                        }
+//                    }
+//                    value = performRotation(value, rotation, direction);
+//                    break;
+//            }
+//            System.out.println("after: " + numZeros + " (new value = " + value + ")");
+//        }
 
         return numZeros;
     }
