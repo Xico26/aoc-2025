@@ -4,9 +4,13 @@ import java.util.List;
 
 public class Day01 {
     List<String> inputsList;
+    int globalNumZeros;
+    int globalValue;
 
     public Day01 (String inputFileName) {
         this.inputsList = Utils.parseInput(inputFileName);
+        this.globalNumZeros = 0;
+        this.globalValue = 50;
     }
 
     public void run() {
@@ -69,59 +73,46 @@ public class Day01 {
         }
     }
 
-    private int turnLeft(int value) {
-        if (value - 1 < 0) {
-            return 99;
+    private void turnLeft() {
+        int before = this.globalValue;
+        this.globalValue = Math.floorMod(this.globalValue - 1, 100);
+        int after = this.globalValue;
+
+        if (before != 0 && after == 0) {
+            this.globalNumZeros++;
         }
-        return value--;
     }
 
-    private int turnRight (int value) {
-        if (value + 1 > 99) {
-            return 0;
+    private void turnRight () {
+        int before = this.globalValue;
+        this.globalValue = Math.floorMod(this.globalValue + 1, 100);
+        int after = this.globalValue;
+
+        if (before != 0 && after == 0) {
+            this.globalNumZeros++;
         }
-        return value++;
     }
 
     public int part2() {
-        int value = 50;
-        int numZeros = 0;
-
         for (String line : inputsList) {
-            System.out.print(value + " + " + line + " = ");
+            System.out.print(this.globalValue + " + " + line + " = ");
             char direction =  line.charAt(0);
             String rotationStr = line.substring(1);
             int rotation = Integer.parseInt(rotationStr);
 
             for (int i = 0; i < rotation; i++) {
                 if (direction == 'R') {
-                    value++;
-                    if (value > 99) {
-                        value = 0;
-                        if (i < rotation - 1) {
-                            numZeros++;
-                        }
-                    }
+                    turnRight();
                 } else {
-                    value--;
-                    if (value < 0) {
-                        value = 99;
-                        if (i < rotation - 1) {
-                            numZeros++;
-                        }
-                    }
+                    turnLeft();
                 }
             }
 
-            if (value == 0) {
-                numZeros++;
-            }
+            System.out.print(this.globalValue + "\n");
 
-            System.out.print(value + "\n");
-
-            System.out.println("num zeros: " + numZeros);
+            System.out.println("num zeros: " + this.globalNumZeros);
         }
 
-        return numZeros;
+        return this.globalNumZeros;
     }
 }
