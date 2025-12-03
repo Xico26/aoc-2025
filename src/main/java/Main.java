@@ -3,6 +3,8 @@ public class Main {
         Day01 d1 = new Day01("/inputs/input_day1.txt");
         // d1.run();
         Day02 d2 = new Day02("/inputs/input_day2.txt");
-        d2.run();
+        // d2.run();
+        Day03 d3 = new Day03("/inputs/input_day3.txt");
+        d3.run();
     }
 }
