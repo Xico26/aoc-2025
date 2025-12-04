@@ -1,5 +1,6 @@
 import common.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Day04 {
@@ -7,7 +8,7 @@ public class Day04 {
     int numAvaliable;
 
     public Day04(String inputFileName) {
-        this.gridLines = Utils.parseInput(inputFileName);
+        this.gridLines = new ArrayList<String>(Utils.parseInput(inputFileName));
         this.numAvaliable = 0;
     }
 
@@ -15,39 +16,64 @@ public class Day04 {
         countAvailable();
 
         System.out.println("Available: " + this.numAvaliable);
+
+        System.out.println("Final result: ");
+        for (String line : this.gridLines) {
+            System.out.println(line);
+        }
     }
 
     public void countAvailable () {
         int numLines = this.gridLines.size();
-        for (int i = 0; i < numLines; i++) {
-            String prev;
-            String curr = this.gridLines.get(i);
-            String next;
-            if (i - 1 < 0) {
-                prev = null;
-            } else {
-                prev = this.gridLines.get(i - 1);
-            }
+        boolean couldRemove = true;
+        while (couldRemove) {
+            System.out.println("Going again");
+            System.out.println("Removed " + numAvaliable + " so far!");
+            for (int i = 0; i < numLines; i++) {
+                String prev;
+                String next;
+                if (i - 1 < 0) {
+                    prev = null;
+                } else {
+                    prev = this.gridLines.get(i - 1);
+                }
 
-            if (i + 1 >= this.gridLines.size()) {
-                next = null;
-            } else {
-                next = this.gridLines.get(i + 1);
+                if (i + 1 >= this.gridLines.size()) {
+                    next = null;
+                } else {
+                    next = this.gridLines.get(i + 1);
+                }
+                couldRemove = countAvailableLine(prev, i, next);
+
+                System.out.println("Now looking like:");
+                for (String line : this.gridLines) {
+                    System.out.println(line);
+                }
             }
-            countAvailableLine(prev, curr, next);
         }
+
     }
 
-    public void countAvailableLine (String prev, String curr, String next) {
-        for (int i = 0; i < curr.length(); i++) {
+    public boolean countAvailableLine (String prev, int currIndex, String next) {
+        boolean couldRemove = false;
+
+        for (int i = 0; i < this.gridLines.get(currIndex).length(); i++) {
+            String curr = this.gridLines.get(currIndex);
             if (curr.charAt(i) == '@') {
                 int numAdjacent = checkAdjacent(prev, curr, next, i);
                 if (numAdjacent < 4) {
+                    couldRemove = true;
+                    StringBuilder sb = new StringBuilder(curr);
+                    sb.setCharAt(i, '.');
+                    this.gridLines.set(currIndex, sb.toString());
+                    System.out.println("Removed one at line " + currIndex + " position " + i);
+                    System.out.println(this.gridLines.get(currIndex));
                     numAvaliable++;
                 }
             }
         }
 
+        return couldRemove;
     }
 
     public int checkAdjacent (String prev, String curr, String next, int pos) {
