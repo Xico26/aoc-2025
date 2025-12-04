@@ -5,6 +5,8 @@ public class Main {
         Day02 d2 = new Day02("/inputs/input_day2.txt");
         // d2.run();
         Day03 d3 = new Day03("/inputs/input_day3.txt");
-        d3.run();
+        // d3.run();
+        Day04 d4 = new Day04("/inputs/input_day4.txt");
+        d4.run();
     }
 }
