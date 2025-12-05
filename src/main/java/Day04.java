@@ -59,33 +59,6 @@ public class Day04 {
             }
 
         }
-        System.out.println("Going for final loop @ removed = " + numAvaliable);
-
-        // System.out.println("Going again");
-        // System.out.println("Removed " + numAvaliable + " so far!");
-        for (int i = 0; i < numLines; i++) {
-            String prev;
-            String next;
-            if (i - 1 < 0) {
-                prev = null;
-            } else {
-                prev = this.gridLines.get(i - 1);
-            }
-
-            if (i + 1 >= this.gridLines.size()) {
-                next = null;
-            } else {
-                next = this.gridLines.get(i + 1);
-            }
-            couldRemove = countAvailableLine(prev, i, next);
-
-            /*
-            System.out.println("Now looking like:");
-            for (String line : this.gridLines) {
-                System.out.println(line);
-            }
-             */
-        }
     }
 
     public boolean countAvailableLine (String prev, int currIndex, String next) {
